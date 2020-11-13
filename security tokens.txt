@@ -1,62 +1,99 @@
 
     security tokens
 
-        access token
+        types
 
-            issued by an authorization server, and used by a client application in order to access a protected resourse server
+            access token
 
-            typically in the form of JSON Web Token (JWT)
+                issued by an authorization server, and used by a client application in order to access a protected resourse server
 
-            the token contains all applicable claims about the subject, enabling the client application to use it as a form of
-            credential when accessing a given resourse
+                typically in the form of JSON Web Token (JWT)
 
-            access tokens are only valid for a short period of tine and cannot be revoked
+                the token contains all applicable claims about the subject, enabling the client application to use it as a form of
+                credential when accessing a given resourse
 
-                authorization grant
+                access tokens are only valid for a short period of tine and cannot be revoked
 
-                    a credential representing the recource owner's authorization to access its protected resources, granted to a client
-                    application
+                    authorization grant
 
-                    a client application can use one of the four grant types defined by the OAuth2 Authorization Framework to obtain a grant,
-                    depending on client type/requirements
+                        a credential representing the recource owner's authorization to access its protected resources, granted to a client
+                        application
 
-                        authorization code grant
+                        a client application can use one of the four grant types defined by the OAuth2 Authorization Framework to obtain a grant,
+                        depending on client type/requirements
 
-                        client credentials grant
+                            authorization code grant
 
-                        implicit grant
+                            client credentials grant
 
-                        resource owner password credentials grant
+                            implicit grant
 
-                    the credential returned to the client
+                            resource owner password credentials grant
 
-                        access token
+                        the credential returned to the client
 
-                        authorization code (exchanged later for an access token)
+                            access token
 
-                User+App
+                            authorization code (exchanged later for an access token)
 
-                    "Authorization code" authorization grant
+                    User+App
 
-                App-Only
+                        "Authorization code" authorization grant
 
-                    "Client credentials" authorization grant
+                    App-Only
 
-        id token
+                        "Client credentials" authorization grant
 
-            can be send along side or instead of an access token, and are used by the client to authenticate the user
+            id token
 
-        refresh token
+                can be send along side or instead of an access token, and are used by the client to authenticate the user
 
-            authorization servers will sometimes issues a refresh token at the sate time the access tokes is issued.
-            The client application can the exchange this refresh token for a new access token when needed
+                should be used to validate that a user is who they claim to be and get additional useful information about them
 
-        authorization code
+                it shouldn't be used for authorization in place of an access token
 
-            a short lived "token" provided to a client application by the authorization endpoint, as part of the "authorization code" flow,
-            one of the four OAuth2 authorization grants
+                the claims it provides can be used for UX inside you application, as keys in a database, and providing access to the client
+                application
 
-            the code is returned to the client application respose to authentication of a resourse owner, indicating the resource owner has delegated
-            authorization to access the requested resources
+                claims in an id token
 
-            as part of the flow, the code is later redeemed for an access token
+                    id tokens are JWTs, meaning they consist of a header, payload, and signature portion
+
+                    header and signature can be used to verify the authenticity of the token, while the payloads contains the information
+                    about the user requested by your client
+
+            refresh token
+
+                authorization servers will sometimes issues a refresh token at the sate time the access tokes is issued.
+                The client application can the exchange this refresh token for a new access token when needed
+
+                if the user acess to the app wasn't revoked, it will get back a new access token and a new refresh token
+
+            authorization code
+
+                a short lived "token" provided to a client application by the authorization endpoint, as part of the "authorization code" flow,
+                one of the four OAuth2 authorization grants
+
+                the code is returned to the client application respose to authentication of a resourse owner, indicating the resource owner has delegated
+                authorization to access the requested resources
+
+                as part of the flow, the code is later redeemed for an access token
+
+        validating security tokens
+
+            the token is signed by the Security Token Server (STS) with a private key. The STS publishes the corresponding public key
+
+            to validate a token, the app verifies the signature bu sing the STS publick key to validate that signature was
+            created using private key
+
+            tokens are only valida for a limited amount of time. Usually the Sts provides a pair of tokens:
+
+                an access token to access the application or protected resource
+
+                a refresh token used to refresh the access token when the access token is close to expiring
+
+        JSON Web Tokens (JWTs) and claims
+
+            Microsoft identity platform implements security tokens as JWTs that contain claims
+
+            since JWTs are used as security tokens, this form of authentication is sometimes called JWT authentication
