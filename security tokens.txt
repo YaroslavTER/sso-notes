@@ -1,0 +1,62 @@
+
+    security tokens
+
+        access token
+
+            issued by an authorization server, and used by a client application in order to access a protected resourse server
+
+            typically in the form of JSON Web Token (JWT)
+
+            the token contains all applicable claims about the subject, enabling the client application to use it as a form of
+            credential when accessing a given resourse
+
+            access tokens are only valid for a short period of tine and cannot be revoked
+
+                authorization grant
+
+                    a credential representing the recource owner's authorization to access its protected resources, granted to a client
+                    application
+
+                    a client application can use one of the four grant types defined by the OAuth2 Authorization Framework to obtain a grant,
+                    depending on client type/requirements
+
+                        authorization code grant
+
+                        client credentials grant
+
+                        implicit grant
+
+                        resource owner password credentials grant
+
+                    the credential returned to the client
+
+                        access token
+
+                        authorization code (exchanged later for an access token)
+
+                User+App
+
+                    "Authorization code" authorization grant
+
+                App-Only
+
+                    "Client credentials" authorization grant
+
+        id token
+
+            can be send along side or instead of an access token, and are used by the client to authenticate the user
+
+        refresh token
+
+            authorization servers will sometimes issues a refresh token at the sate time the access tokes is issued.
+            The client application can the exchange this refresh token for a new access token when needed
+
+        authorization code
+
+            a short lived "token" provided to a client application by the authorization endpoint, as part of the "authorization code" flow,
+            one of the four OAuth2 authorization grants
+
+            the code is returned to the client application respose to authentication of a resourse owner, indicating the resource owner has delegated
+            authorization to access the requested resources
+
+            as part of the flow, the code is later redeemed for an access token

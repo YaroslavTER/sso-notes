@@ -1,0 +1,11 @@
+
+    redirect URI / reply URL
+
+        is the location where the authorization server send the user once
+        the app has been sucsessfully authorized and granted an authorization code
+        or accsess token
+
+        the autorization server send the code or token to the redirect URI,
+        so it's important you register the correct location as part of the app
+        registration process
+        

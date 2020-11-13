@@ -1,0 +1,17 @@
+
+    passport azure ad
+
+        is a colleciton os Passport Strategies to help you to integrate with Azure Active Deirectory
+
+        includes
+
+            authentication and autorization
+
+                OpenID Connect
+
+                WS-Federation
+
+                SAML-P
+
+        the included providers let you to integrate Node app with Microsoft Azure AD, so you can use its many features
+        including single sing-on, Endpoint protection with OAuth, and JWT token issuance and validation
