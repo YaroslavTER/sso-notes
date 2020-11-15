@@ -1,0 +1,55 @@
+
+
+        tenancy in Azure Active Directory
+
+            Azure AD organizes objects like users and apps into groups called
+            tenants. TEnants allow an administator to set policies on the
+            organization and the apps that the organization owns to meet their
+            security and operational policies
+
+            whro can sign in to your apps
+
+                apps type
+
+                    single-tenant
+
+                        only available in the tenant they were registered in,
+                        also known as their home tenant
+
+                    multi-tenant
+
+                        available to users in both their home tenant and other
+                        tenants
+            
+            accounts in this directory only
+
+                singl-tenant
+
+                    all user and guest accounts in our directory can use your
+                    application or API
+
+                    if your target audience is intenal to your organization
+
+            accounts in any Azure AD directory
+
+                multi-tenant
+
+                    all users and guests with work or school account from Microsoft
+                    can use your application or API. This includes scrools and
+                    businesses that use Microsoft 365
+
+                    if your target audience is business or educational customers
+
+            accounts in any Azure AD directory and personal Microsoft accounts
+            (such as Skype, Xbox, Outlook.com)
+
+                multi-tenant
+
+                    all users with a work or school, or personal Microsoft account
+                    can use your application or API. It includes schools and
+                    businesses that use Microsoft 365 as well as personal accounts
+                    that are used to sign in to services like Xbox and Skype
+
+                    to target the widest set of Microsoft accounts
+
+                    

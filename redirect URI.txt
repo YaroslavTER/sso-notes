@@ -9,3 +9,63 @@
         so it's important you register the correct location as part of the app
         registration process
         
+        the following restrictions apply to redirect URIs:
+
+            the redirect URI must begin with the scheme https. There are some
+            exceptions for localhost redirect URIs
+
+            the redirect URI is case-sensitive
+
+        maximum number of redirect URIs
+
+            this table shows the maximum number of redirect URIs you can add to
+            an app registration in the Microsoft identity platform
+
+                Microsoft work or school accounts in any organization's Azure Active
+                Directory (Azure AD) tenant
+
+                    256
+
+                    `signInAudience` field in the application manifest is set to
+                    either AzureADMyOrg or AzureADMultipleOrgs
+
+                Personal Microsoft accounts and work and school accounts
+
+                    100
+
+                    `signInAudience` field in the application manifest is set to
+                    AzureADandPersinalMicrosoftAccount
+
+        maximum URI length
+
+            you can use a maximum of 256 characters for each redirect URI you add to
+            an app registration
+
+        localhost exceptions
+
+            loopback or localhost redirect URIs come with two special considerations
+
+                http URI schemes are acceptable because the redirect never leaves
+                the device
+
+                due to ephemeral port ranges often required by native applications,
+                the ports component (for example :5001 or :433) is ignored for the
+                purposes of matching redirect URI
+
+            from a development standpoint, this means a few things
+
+                do not register multiple redirect URIs where only the port differs.
+                the login server will pick one arbitrarily and use the behaviour
+                associated with that redirect URI (for example, whether it's a web-,
+                native-, or spa- type redirect)
+
+                if ou need to register multiple redirect URIs on localhost to test
+                different flows during development, differentiate them using the
+                path component of the URI. For example http://127.0.0.1/MyWebApp
+                does not match http://127.0.0.1/MyNativeApp
+
+                the IPv6 loopback address ([::1]) is not currently supported
+
+                to prevent your app from being broken by misconfigured firewalls or
+                renamed network interfaces, use the IP literal loopback address
+                127.0.0.1 in your redirect URI instead of localhost

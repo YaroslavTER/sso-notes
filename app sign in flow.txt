@@ -1,0 +1,52 @@
+
+    app sign in flow
+
+        on web app navigation
+
+            the web app determines whether the user is authenticated
+
+            if the user isn't authenticated, the web app delegates to Azure AD
+            to sign in the user
+
+                may ask the user to enter their creadentials, using multi-factor
+                authentication (sometimes refered to as two-factor authentication
+                or 2FA), or not useing a password at all
+
+
+            the user is asked to consent to the access that the client app needs.
+            This is why client app need to be registered with Azure AD, so that
+            Microsoft identity platform can deliver tokens representing the access
+            that the user has consented to
+
+        on successful authentication
+
+            microsoft identity platfowm send a token to the web app
+
+            a cookie is saved, associated with Azure AD's domain, that contains the
+            identity of the user in the browser's cookie jar. On the next Microsoft
+            identity platform authorization endpoint navigation, the browser
+            presents the cookie so that the user doesn't have to sign in again.
+            This is also the way that SSO is achieved. The cookie is produced by
+            Azure AD and can only be understood by Azure AD
+
+            the web app then validates the token. If the validation succeeds, the
+            web app displays the protected page and saves a session cookie in the
+            browser's cookie jar. When the user navigates to another page, the web
+            app knows that the suer is authenticated based on the session cookie
+
+        delegation sign-in to Microsoft identity platform and token obtaining
+
+            the web app sends an HTP 302 (redirect) to the browser to user Microsoft
+            identity platform
+
+            when the user is authenticated, Microsoft identity platform sends the
+            token to the web app by using a redirect through the browser
+
+            the redirect is provided by the web app in the form of a redirect URI.
+            This redirect URI is registered with the Azure AD application object.
+            There can be several redirect URIs because the application my be
+            deployed at severa URLs. So the web app will also need to specify
+            redirect URI to use
+
+            Azure AD verifies that the redirect URI sent by the web app is one of
+            the registered redirect URIs for the app

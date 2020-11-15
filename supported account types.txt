@@ -1,0 +1,23 @@
+
+    supported account types
+
+        account types sometimes called audiences
+
+        account types in the public cloud
+
+            if you can sign in users in your own organization. Such an application
+            called single-tenant
+
+            if you're an ISV, you can write an application that signs in users:
+
+                in any organization. Such an application is called a multitenant
+                web application
+
+                with their work or school or personal Microsoft accounts
+
+                with only personal Microsoft accounts
+
+            if you're writing a business-to-consumer application, you can also sign
+            in users with their social identities, by using Azure Active Directory
+            B2C (Azure AD B2C)
+            
