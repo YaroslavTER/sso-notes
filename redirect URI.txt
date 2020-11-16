@@ -69,3 +69,45 @@
                 to prevent your app from being broken by misconfigured firewalls or
                 renamed network interfaces, use the IP literal loopback address
                 127.0.0.1 in your redirect URI instead of localhost
+
+        restrinctions on wildcards in redirect URIs
+
+            wildcard URIs like https://*.contoso.com should be avoided due to
+            secyruty implications
+
+            wildcard URIs currently unsupported in ap registrations configured to
+            to sign in personal Microsoft accounts and work or school accounts.
+            Wildcard URIs are allowed, however, for apps that are configured to
+            to sign in only work or school accounts in an organization's Azure
+            AD tenant
+
+        use a state parameter
+
+            if you have several subdomains and your scenario requires that,
+            upon successful authentication, you redirect users to the same
+            page from witch they started , using a state parameter might be
+            helpful
+
+            in this approach
+
+                create a shared redirect URI per application to process the
+                security tokens you recieve from the authorization endpoint
+                
+                your application can send application-specific parameters
+                (such as subdomain URL where the user originated or anything
+                like branding information) in the state parameter. When using
+                a state parameter, guard against CSRF protection
+
+                the application-specific parameters will include all the
+                information needed for the application ti rebder the correct
+                experiebce for the user, that is, construct the appropriate
+                application state. Azure AD authorization endpoint strips
+                HTML from the state parameter so make sure you are not passing
+                HTML content in the parameter
+
+                where Azure AD sends a response to the shared redirect URI, it
+                will send the state parameter back to the application
+
+                the application can then use the value in the satte parameter
+                to determine wich URL to further send the user to. Make sure
+                you validate from CSRF protection     

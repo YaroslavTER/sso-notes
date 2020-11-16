@@ -34,9 +34,37 @@ const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const passport = require('passport');
 const morgan = require('morgan');
-const util = require('util');
 const bunyan = require('bunyan');
-const config = require('./config');
+const path = require('path');
+const {
+  creds: {
+    identityMetadata,
+    clientID,
+    responseType,
+    responseMode,
+    redirectUrl,
+    allowHttpForRedirectUrl,
+    clientSecret,
+    validateIssuer,
+    isB2C,
+    issuer,
+    jweKeyStore,
+    passReqToCallback,
+    scope,
+    loggingLevel,
+    nonceLifetime,
+    nonceMaxAmount,
+    useCookieInsteadOfSession,
+    cookieEncryptionKeys,
+    clockSkew,
+  },
+  useMongoDBSessionStore,
+  databaseUri,
+  mongoDBSessionMaxAge,
+  resourceURL,
+  destroySessionUrl,
+  port,
+} = require('./config');
 
 // set up database for express session
 const MongoStore = require('connect-mongo')(expressSession);
@@ -44,7 +72,7 @@ const mongoose = require('mongoose');
 
 // Start QuickStart here
 
-const OIDCStrategy = require('passport-azure-ad').OIDCStrategy;
+const { OIDCStrategy } = require('passport-azure-ad');
 
 const log = bunyan.createLogger({
   name: 'Microsoft OIDC Example Web Application',
@@ -101,25 +129,25 @@ const findByOid = (oid, fn) => {
 passport.use(
   new OIDCStrategy(
     {
-      identityMetadata: config.creds.identityMetadata,
-      clientID: config.creds.clientID,
-      responseType: config.creds.responseType,
-      responseMode: config.creds.responseMode,
-      redirectUrl: config.creds.redirectUrl,
-      allowHttpForRedirectUrl: config.creds.allowHttpForRedirectUrl,
-      clientSecret: config.creds.clientSecret,
-      validateIssuer: config.creds.validateIssuer,
-      isB2C: config.creds.isB2C,
-      issuer: config.creds.issuer,
-      jweKeyStore: config.creds.jweKeyStore,
-      passReqToCallback: config.creds.passReqToCallback,
-      scope: config.creds.scope,
-      loggingLevel: config.creds.loggingLevel,
-      nonceLifetime: config.creds.nonceLifetime,
-      nonceMaxAmount: config.creds.nonceMaxAmount,
-      useCookieInsteadOfSession: config.creds.useCookieInsteadOfSession,
-      cookieEncryptionKeys: config.creds.cookieEncryptionKeys,
-      clockSkew: config.creds.clockSkew,
+      identityMetadata,
+      clientID,
+      responseType,
+      responseMode,
+      redirectUrl,
+      allowHttpForRedirectUrl,
+      clientSecret,
+      validateIssuer,
+      isB2C,
+      issuer,
+      jweKeyStore,
+      passReqToCallback,
+      scope,
+      loggingLevel,
+      nonceLifetime,
+      nonceMaxAmount,
+      useCookieInsteadOfSession,
+      cookieEncryptionKeys,
+      clockSkew,
     },
     (
       req,
@@ -169,22 +197,22 @@ passport.use(
 const app = express();
 const router = express.Router();
 
-app.set('views', __dirname + '/views');
+app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'ejs');
 app.use(morgan('dev'));
 app.use(methodOverride());
 app.use(cookieParser());
 
 // set up session middleware
-if (config.useMongoDBSessionStore) {
-  mongoose.connect(config.databaseUri);
+if (useMongoDBSessionStore) {
+  mongoose.connect(databaseUri);
   app.use(
     express.session({
       secret: 'secret',
-      cookie: { maxAge: config.mongoDBSessionMaxAge * 1000 },
+      cookie: { maxAge: mongoDBSessionMaxAge * 1000 },
       store: new MongoStore({
         mongooseConnection: mongoose.connection,
-        clear_interval: config.mongoDBSessionMaxAge,
+        clear_interval: mongoDBSessionMaxAge,
       }),
     })
   );
@@ -205,7 +233,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(router);
-app.use(express.static(__dirname + '/../../public'));
+app.use(express.static(path.join(__dirname, '/../../public')));
 
 //-----------------------------------------------------------------------------
 // Set up the route controller
@@ -237,7 +265,7 @@ router.get(
   (req, res, next) =>
     passport.authenticate('azuread-openidconnect', {
       response: res, // required
-      resourceURL: config.resourceURL, // optional. Provide a value if you want to specify the resource.
+      resourceURL: resourceURL, // optional. Provide a value if you want to specify the resource.
       customState: 'my_state', // optional. Provide a value if you want to provide custom state value.
       failureRedirect: '/',
     })(req, res, next),
@@ -285,10 +313,16 @@ router.post(
 
 // 'logout' route, logout from passport, and destroy the session with AAD.
 router.get('/logout', (req, res) =>
-  req.session.destroy((err) => {
+  req.session.destroy((error) => {
+    if (error) {
+      throw new Error(error);
+    }
+
     req.logOut();
-    res.redirect(config.destroySessionUrl);
+    res.redirect(destroySessionUrl);
   })
 );
 
-app.listen(3000);
+app.listen(3000, () =>
+  console.log(`app listening at http://localhost:${port}`)
+);

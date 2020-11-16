@@ -1,0 +1,36 @@
+
+  overall basic flow
+
+    prerequisits
+
+      web app
+        
+        should be registered in the indentity provider
+
+        should be configured according security keys
+        provided by identity provider
+
+      user
+
+        should have microsoft email or account according to
+        tenancy of the application
+
+    the user visits authorization page of the web app
+
+    the web app redirects the user to the identity provider
+
+      user
+        
+        passes authentication according tenancy of the registered
+        web app
+
+        passes authorization
+        
+        gets rediceted to the redirect URL of the web app with security tokens
+
+    web app
+    
+      validates the security tokens
+
+      caches security tokens, so the user should not pass all of the
+      steps again
