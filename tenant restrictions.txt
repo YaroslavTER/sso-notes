@@ -1,0 +1,30 @@
+
+    tenancy restrictions
+
+        on authentication process
+
+            on each incoming request proxy sets http headers
+
+            /*
+                what proxy server should I use and why?
+
+                    options that I've found
+
+                        nginx
+
+                        Azure AD Application proxy
+
+                        MC Affe proxy
+
+                will Azure AD Application proxy be suitable for this task and why?
+
+                should I build my own proxy server for this purpose?
+            */
+
+                Restrict-Access-To-Tenants
+
+                    white list of tenants
+
+                Restrict-Access-Context
+
+                    // quiet don't understand meaning of this header for now
