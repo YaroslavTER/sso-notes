@@ -3,28 +3,41 @@
 
         on authentication process
 
-            on each incoming request proxy sets http headers
+          Azure Active Directory admin panel
 
-            /*
-                what proxy server should I use and why?
+            you can restrict users according tenancy of your application.
+            Applies to the case, when you create or invite a new user
 
-                    options that I've found
+          using proxy
 
-                        nginx
+            you can restrinc existing userbase to login only
+            if email domain match with one of the domains from
+            the white list
 
-                        Azure AD Application proxy
+            how does it works
 
-                        MC Affe proxy
+              on each incoming request proxy sets http headers
 
-                will Azure AD Application proxy be suitable for this task and why?
+              /*
+                  what proxy server should I use and why?
 
-                should I build my own proxy server for this purpose?
-            */
+                      options that I've found
 
-                Restrict-Access-To-Tenants
+                          nginx
 
-                    white list of tenants
+                          Azure AD Application proxy
 
-                Restrict-Access-Context
+                          MC Affe proxy
 
-                    // quiet don't understand meaning of this header for now
+                  will Azure AD Application proxy be suitable for this task and why?
+
+                  should I build my own proxy server for this purpose?
+              */
+
+                  Restrict-Access-To-Tenants
+
+                      white list of tenants
+
+                  Restrict-Access-Context
+
+                      // quiet don't understand meaning of this header for now
