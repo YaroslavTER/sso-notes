@@ -1,43 +1,28 @@
 
-    tenancy restrictions
+  tenancy restrictions
 
-        on authentication process
+      on authentication process
 
-          Azure Active Directory admin panel
+        Azure Active Directory admin panel
 
-            you can restrict users according tenancy of your application.
-            Applies to the case, when you create or invite a new user
+          you can restrict users according tenancy of your application.
+          Applies to the case, when you create or invite a new user
 
-          using proxy
+        using proxy
 
-            you can restrinc existing userbase to login only
-            if email domain match with one of the domains from
-            the white list
+          you can restrinc existing userbase to login only
+          if email domain match with one of the domains from
+          the white list
 
-            how does it works
+          how does it works
 
-              on each incoming request proxy sets http headers
+            on each incoming request proxy sets http headers
 
-              /*
-                  what proxy server should I use and why?
+              Restrict-Access-To-Tenants
 
-                      options that I've found
+                white list of tenants
 
-                          nginx
+              Restrict-Access-Context
 
-                          Azure AD Application proxy
-
-                          MC Affe proxy
-
-                  will Azure AD Application proxy be suitable for this task and why?
-
-                  should I build my own proxy server for this purpose?
-              */
-
-                  Restrict-Access-To-Tenants
-
-                      white list of tenants
-
-                  Restrict-Access-Context
-
-                      // quiet don't understand meaning of this header for now
+                use a value of a single directory ID, declaring which tenant is
+                setting the tenant restrictions
